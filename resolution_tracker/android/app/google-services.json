@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "818214730830",
+    "firebase_url": "https://resolutionstracker.firebaseio.com",
+    "project_id": "resolutionstracker",
+    "storage_bucket": "resolutionstracker.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:818214730830:android:d88ed5fbd326af8103d71f",
+        "android_client_info": {
+          "package_name": "com.example.resolution_tracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "818214730830-jq315ic47l54a5l29get38f52gkojter.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.resolution_tracker",
+            "certificate_hash": "02db3a235f110c508a2a78abdc6ca626dc00c624"
+          }
+        },
+        {
+          "client_id": "818214730830-6bgqrfl2c6g93463v7tomq7524p2t0jp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA8S1kpNJF_sjWb2v1ms2xYN3FLBqWRzp0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "818214730830-6bgqrfl2c6g93463v7tomq7524p2t0jp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
