@@ -1,4 +1,6 @@
 
+import 'package:firebase_auth/firebase_auth.dart';
+
 ///
 ///
 class Resolution {
@@ -15,6 +17,15 @@ class Resolution {
   
   Resolution.create(this.title, this.icon, this.frequency);
 
+}
+
+
+class User {
+  FirebaseUser _fbUser;
+
+  User(this._fbUser);
+
+  String get name => _fbUser.displayName;
 }
 
 

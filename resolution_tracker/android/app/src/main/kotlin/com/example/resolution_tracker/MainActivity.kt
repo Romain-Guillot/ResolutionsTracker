@@ -1,4 +1,4 @@
-package com.develob.resolution_tracker
+package com.example.resolution_tracker
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity
