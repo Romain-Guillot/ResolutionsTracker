@@ -62,7 +62,7 @@ class FirebaseAuthenticationRepository {
 
   }
 
-  logout() async {
+  Future<void> logout() async {
     return _auth.signOut();
   }
 
