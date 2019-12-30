@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
@@ -10,6 +8,18 @@ import 'package:resolution_tracker/res/dimens.dart';
 import 'package:resolution_tracker/res/strings.dart';
 import 'package:resolution_tracker/main.dart';
 
+
+/// Welcome page, display to authenticate the user.
+/// 
+/// Tree :
+///   - Welcome title
+///   - App presentation
+///   - Auth area
+/// 
+/// Note : navigation to the homepage when the user is logged
+/// is handled directly by the root widget thanks to the provider
+/// architecture.
+///
 class WelcomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -41,12 +51,7 @@ class WelcomePage extends StatelessWidget {
                         child: Text(Strings.WELCOME_TITLE, style: Theme.of(context).textTheme.title),
                       ),
                       SizedBox(height: Dimens.WELCOME_BLOCK_PADDING,),
-                      Text(Strings.WELCOME_INTRO1, style: Theme.of(context).textTheme.body1),
-                      SizedBox(height: Dimens.NORMAL_PADDING,),
-                      ConfettiImage(),
-                      SizedBox(height: Dimens.NORMAL_PADDING,),
-                      Text(Strings.WELCOME_INTRO2, style: Theme.of(context).textTheme.body1),
-                      Text(Strings.WELCOME_INTRO3, style: Theme.of(context).textTheme.body1),
+                      AppPresentationWidget(),
                       Expanded(child: SizedBox()),
                       GoogleSignInButton(onPressed: handleGoogleSignIn)
                     ],
@@ -66,6 +71,27 @@ class WelcomePage extends StatelessWidget {
       .catchError((e) => {});
   }
 }
+
+class AppPresentationWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        Text(Strings.WELCOME_INTRO1, style: Theme.of(context).textTheme.body1),
+        SizedBox(height: Dimens.NORMAL_PADDING,),
+        SvgPicture.asset(
+          "assets/icon.svg",
+          semanticsLabel: 'Confetti logo',
+          width: 200,
+        ),
+        SizedBox(height: Dimens.NORMAL_PADDING,),
+        Text(Strings.WELCOME_INTRO2, style: Theme.of(context).textTheme.body1),
+        Text(Strings.WELCOME_INTRO3, style: Theme.of(context).textTheme.body1),
+      ],
+    );
+  }
+}
+
 
 
 class GoogleSignInButton extends StatelessWidget {
@@ -90,16 +116,4 @@ class GoogleSignInButton extends StatelessWidget {
       onPressed: onPressed,
     );
   }
-}
-
-
-class ConfettiImage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return SvgPicture.asset(
-        "assets/icon.svg",
-        semanticsLabel: 'Confetti logo',
-        width: 200,
-    );
-}
 }

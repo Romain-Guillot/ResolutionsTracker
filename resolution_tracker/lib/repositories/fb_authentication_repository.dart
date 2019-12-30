@@ -66,7 +66,7 @@ class FirebaseAuthenticationRepository {
     return _auth.signOut();
   }
 
-  delete() {
-
+  Future<void> delete() async {
+    (await _auth.currentUser()).delete();
   }
 }

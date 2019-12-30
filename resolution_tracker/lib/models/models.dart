@@ -25,7 +25,8 @@ class User {
 
   User(this._fbUser);
 
-  String get name => _fbUser.displayName;
+  String get name => _fbUser.displayName??"";
+  String get profileURL => _fbUser.photoUrl;
 }
 
 

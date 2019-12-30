@@ -22,6 +22,10 @@ void main() {
 } 
 
 
+
+ShapeBorder bottomSheetShape = RoundedRectangleBorder(borderRadius: BorderRadius.only(topLeft: Radius.circular(Dimens.SHAPE_LARGE_COMPONENT), topRight: Radius.circular(Dimens.SHAPE_LARGE_COMPONENT)));
+ShapeBorder largeShape = RoundedRectangleBorder(borderRadius: BorderRadius.circular(Dimens.SHAPE_LARGE_COMPONENT));
+
 TextTheme appTextTheme = TextTheme(
   title: TextStyle(fontSize: 45.0, fontWeight: Dimens.FONT_WEIGHT_BOLD),
 );
