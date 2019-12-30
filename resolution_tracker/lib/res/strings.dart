@@ -24,7 +24,11 @@ class Strings {
   static const ADD_RESOLTUION_ICON_LABEL = "Add an icon";
   static const ADD_RESOLUTION_SUBMIT = "Save my resolution";
 
+  static const DELETE_ACCOUNT_TITLE = "Are you sure ?";
+  static const DELETE_ACCOUNT_INFO = "Your account and all associated data will be permanently deleted. You will never be able to recover your resolutions again.";
+
   static STREAK_RESOLUTION(int quantity) => (quantity <= 1 ? "week" : "weeks") + "without break";
+
 
   
 

@@ -11,7 +11,8 @@ Flutter + Dart ❤️
 Firebase is used to handle :
 - User account w/ Firebase Authentication;
 - User data storage w/ Cloud Firestore;
-- Some trackings w/ Firebase Analytics.
+- Some trackings w/ Firebase Analytics;
+- Triggered backend operation w/ Cloud Functions.
 
 ## Features
 

@@ -5,6 +5,7 @@ import 'package:resolution_tracker/main.dart';
 import 'package:resolution_tracker/models/models.dart';
 import 'package:resolution_tracker/repositories/fb_authentication_repository.dart';
 import 'package:resolution_tracker/res/dimens.dart';
+import 'package:resolution_tracker/res/strings.dart';
 
 
 class ProfileButtonWidget extends StatefulWidget {
@@ -74,8 +75,9 @@ class _ProfileButtonWidgetState extends State<ProfileButtonWidget> {
     Navigator.pop(context);
     showDialog(context: context, builder: (context) => AlertDialog(
       shape: largeShape,
-      title: Text("Are you sure ?"),
-      content: Text("Blah blah blah"),
+      title: Text(Strings.DELETE_ACCOUNT_TITLE),
+      titleTextStyle: Theme.of(context).textTheme.headline,
+      content: Text(Strings.DELETE_ACCOUNT_INFO),
       actions: <Widget>[
         RaisedButton(
           child: Text("Cancel"), 

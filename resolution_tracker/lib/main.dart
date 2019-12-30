@@ -28,6 +28,7 @@ ShapeBorder largeShape = RoundedRectangleBorder(borderRadius: BorderRadius.circu
 
 TextTheme appTextTheme = TextTheme(
   title: TextStyle(fontSize: 45.0, fontWeight: Dimens.FONT_WEIGHT_BOLD),
+  headline: TextStyle(fontSize: 30, fontWeight: Dimens.FONT_WEIGHT_BOLD),
 );
 
 
