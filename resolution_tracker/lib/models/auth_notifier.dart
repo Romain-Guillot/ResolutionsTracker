@@ -7,6 +7,7 @@ import 'package:resolution_tracker/models/models.dart';
 class AuthenticationNotifier extends ChangeNotifier {
 
   FirebaseAuthenticationRepository _authRepo = FirebaseAuthenticationRepository();
+  bool isInit = false;
   User user;
 
   AuthenticationNotifier() {
@@ -16,11 +17,13 @@ class AuthenticationNotifier extends ChangeNotifier {
   _initUserSnapshot() {
     _authRepo.getUserStream().listen(
       (u) {
+        isInit = true;
         user = u;
         notifyListeners();
       }, 
-      onDone: () => notifyListeners(),
-      onError: (_) => notifyListeners());
+      onDone: () {isInit = true; notifyListeners();},
+      onError: (_) {isInit = true; notifyListeners();}
+    );
   }
 
 

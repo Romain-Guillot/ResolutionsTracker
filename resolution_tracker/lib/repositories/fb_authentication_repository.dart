@@ -27,8 +27,11 @@ class FirebaseAuthenticationRepository {
   Stream<User> getUserStream() {
     _auth.currentUser();
     StreamTransformer<FirebaseUser, User> streamTransformer = StreamTransformer.fromHandlers(
-      handleData: (fbUser, sink) => sink.add(User(fbUser))
+      handleData: (fbUser, sink) {
+        Future.delayed(const Duration(seconds: 5), () => sink.add(fbUser == null ? null : User(fbUser)));
+      }
     );
+        
     return _auth.onAuthStateChanged.transform(streamTransformer);
   }
 
