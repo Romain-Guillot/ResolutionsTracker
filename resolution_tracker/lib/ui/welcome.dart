@@ -1,11 +1,12 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:resolution_tracker/repositories/fb_authentication_repository.dart';
 import 'package:resolution_tracker/res/colors.dart';
-import 'package:resolution_tracker/res/dimen.dart';
+import 'package:resolution_tracker/res/dimens.dart';
 import 'package:resolution_tracker/res/strings.dart';
 import 'package:resolution_tracker/main.dart';
 
@@ -23,37 +24,46 @@ class WelcomePage extends StatelessWidget {
             scaffoldBackgroundColor: ColorsApp.primaryColor,
   
         ),
-        child: Scaffold(
-        body: Padding(
-          padding: const EdgeInsets.fromLTRB(Dimens.SCREEN_MARGIN_Y, Dimens.SCREEN_MARGIN_X, Dimens.SCREEN_MARGIN_Y, Dimens.SCREEN_MARGIN_X),
-          child: SizedBox.expand(
-              child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                SizedBox(
-                  width: double.infinity,
-                  child: Text(Strings.WELCOME_TITLE, style: Theme.of(context).textTheme.title),
+        child: AnnotatedRegion<SystemUiOverlayStyle>(
+          value: SystemUiOverlayStyle(
+            statusBarColor: Colors.transparent,
+          ),
+          child: Scaffold(
+            body: SafeArea( // safe area is here to manage status and navigation bar color
+              child: Padding(
+                padding: Dimens.SCREEN_MARGIN,
+                child: SizedBox.expand(
+                    child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      SizedBox(
+                        width: double.infinity,
+                        child: Text(Strings.WELCOME_TITLE, style: Theme.of(context).textTheme.title),
+                      ),
+                      SizedBox(height: Dimens.WELCOME_BLOCK_PADDING,),
+                      Text(Strings.WELCOME_INTRO1, style: Theme.of(context).textTheme.body1),
+                      SizedBox(height: Dimens.NORMAL_PADDING,),
+                      ConfettiImage(),
+                      SizedBox(height: Dimens.NORMAL_PADDING,),
+                      Text(Strings.WELCOME_INTRO2, style: Theme.of(context).textTheme.body1),
+                      Text(Strings.WELCOME_INTRO3, style: Theme.of(context).textTheme.body1),
+                      Expanded(child: SizedBox()),
+                      GoogleSignInButton(onPressed: handleGoogleSignIn)
+                    ],
+                  ),
                 ),
-                SizedBox(height: Dimens.WELCOME_BLOCK_PADDING,),
-                Text(Strings.WELCOME_INTRO1, style: Theme.of(context).textTheme.body1),
-                SizedBox(height: Dimens.NORMAL_PADDING,),
-                ConfettiImage(),
-                SizedBox(height: Dimens.NORMAL_PADDING,),
-                Text(Strings.WELCOME_INTRO2, style: Theme.of(context).textTheme.body1),
-                Text(Strings.WELCOME_INTRO3, style: Theme.of(context).textTheme.body1),
-                Expanded(child: SizedBox()),
-                GoogleSignInButton(onPressed: handleGoogleSignIn)
-              ],
+              )
             ),
           ),
         )
-      ),
     );
   }
 
 
   handleGoogleSignIn() {
-    FirebaseAuthenticationRepository().signInWithGoogle();
+    FirebaseAuthenticationRepository().signInWithGoogle()
+      .then((_) => {})
+      .catchError((e) => {});
   }
 }
 

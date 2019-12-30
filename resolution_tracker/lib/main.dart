@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:resolution_tracker/models/auth_notifier.dart';
 import 'package:resolution_tracker/models/resolutions_notifier.dart';
-import 'package:resolution_tracker/repositories/fb_authentication_repository.dart';
 import 'package:resolution_tracker/res/colors.dart';
-import 'package:resolution_tracker/res/dimen.dart';
+import 'package:resolution_tracker/res/dimens.dart';
 import 'package:resolution_tracker/res/strings.dart';
 import 'package:resolution_tracker/ui/homepage.dart';
 import 'package:resolution_tracker/ui/welcome.dart';
@@ -54,7 +53,9 @@ ThemeData appTheme = ThemeData(
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(Dimens.SHAPE_SMALL_CORNER_RADIUS))
   ),
   // inputDecorationTheme: ,
-  // cardTheme: ,
+  cardTheme: CardTheme(
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(Dimens.SHAPE_MEDIUM_CORNER_RADIUS))
+  ),
 
   textTheme: appTextTheme,
 
@@ -71,13 +72,12 @@ ThemeData appTheme = ThemeData(
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    FirebaseAuthenticationRepository().logout(); // TODO : remove
+    // FirebaseAuthenticationRepository().logout(); // TODO : remove
 
     return MaterialApp(
       title: Strings.APP_NAME,
       theme: appTheme,
-      home: SafeArea(
-          child: Consumer<AuthenticationNotifier>(
+      home: Consumer<AuthenticationNotifier>(
           builder: (context, authNotifier, child) {
             if (!authNotifier.isInit)
               return LoadingWidget();
@@ -87,7 +87,7 @@ class MyApp extends StatelessWidget {
               return HomePage();
           }
         ),
-      ),
+      
     );
   }
 }

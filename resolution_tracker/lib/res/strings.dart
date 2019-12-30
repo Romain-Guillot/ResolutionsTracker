@@ -1,4 +1,6 @@
 
+/// All strings used in the app
+/// TODO : internationalization
 class Strings {
 
   static const APP_NAME = "Resolution tracker";
