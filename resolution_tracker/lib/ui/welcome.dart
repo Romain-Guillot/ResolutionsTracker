@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:resolution_tracker/repositories/fb_authentication_repository.dart';
 import 'package:resolution_tracker/res/colors.dart';
 import 'package:resolution_tracker/res/dimen.dart';
@@ -16,16 +17,35 @@ class WelcomePage extends StatelessWidget {
             colorScheme: appColorScheme.copyWith(
               primary: Color(0xFFFFFFFF),
               onPrimary: Color(0xFF000000),
-              onSurface: Color(0xFF000000),
-              onBackground: Color(0xFFFFFFFF)
-            )
+              background: ColorsApp.primaryColor,
+              onBackground: Color(0xFFFFFFFF),
+            ),
+            scaffoldBackgroundColor: ColorsApp.primaryColor,
+  
         ),
         child: Scaffold(
-        backgroundColor: ColorsApp.primaryColor,
-        body: Column(
-          children: <Widget>[
-            GoogleSignInButton(onPressed: handleGoogleSignIn)
-          ],
+        body: Padding(
+          padding: const EdgeInsets.fromLTRB(Dimens.SCREEN_MARGIN_Y, Dimens.SCREEN_MARGIN_X, Dimens.SCREEN_MARGIN_Y, Dimens.SCREEN_MARGIN_X),
+          child: SizedBox.expand(
+              child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                SizedBox(
+                  width: double.infinity,
+                  child: Text(Strings.WELCOME_TITLE, style: Theme.of(context).textTheme.title),
+                ),
+                SizedBox(height: Dimens.WELCOME_BLOCK_PADDING,),
+                Text(Strings.WELCOME_INTRO1, style: Theme.of(context).textTheme.body1),
+                SizedBox(height: Dimens.NORMAL_PADDING,),
+                ConfettiImage(),
+                SizedBox(height: Dimens.NORMAL_PADDING,),
+                Text(Strings.WELCOME_INTRO2, style: Theme.of(context).textTheme.body1),
+                Text(Strings.WELCOME_INTRO3, style: Theme.of(context).textTheme.body1),
+                Expanded(child: SizedBox()),
+                GoogleSignInButton(onPressed: handleGoogleSignIn)
+              ],
+            ),
+          ),
         )
       ),
     );
@@ -60,4 +80,16 @@ class GoogleSignInButton extends StatelessWidget {
       onPressed: onPressed,
     );
   }
+}
+
+
+class ConfettiImage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return SvgPicture.asset(
+        "assets/icon.svg",
+        semanticsLabel: 'Confetti logo',
+        width: 200,
+    );
+}
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:resolution_tracker/models/auth_notifier.dart';
 import 'package:resolution_tracker/models/resolutions_notifier.dart';
+import 'package:resolution_tracker/repositories/fb_authentication_repository.dart';
 import 'package:resolution_tracker/res/colors.dart';
 import 'package:resolution_tracker/res/dimen.dart';
 import 'package:resolution_tracker/res/strings.dart';
@@ -16,9 +17,15 @@ void main() {
         ChangeNotifierProvider(create: (context) => AuthenticationNotifier()),
         ChangeNotifierProvider(create: (context) => ResolutionsNotifier())
       ],
-      child: MyApp()),
-    );
+      child: MyApp()
+    ),
+  );
 } 
+
+
+TextTheme appTextTheme = TextTheme(
+  title: TextStyle(fontSize: 45.0, fontWeight: Dimens.FONT_WEIGHT_BOLD),
+);
 
 
 ColorScheme appColorScheme = ColorScheme(
@@ -49,6 +56,8 @@ ThemeData appTheme = ThemeData(
   // inputDecorationTheme: ,
   // cardTheme: ,
 
+  textTheme: appTextTheme,
+
 );
 
 ///
@@ -62,6 +71,8 @@ ThemeData appTheme = ThemeData(
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    FirebaseAuthenticationRepository().logout(); // TODO : remove
+
     return MaterialApp(
       title: Strings.APP_NAME,
       theme: appTheme,

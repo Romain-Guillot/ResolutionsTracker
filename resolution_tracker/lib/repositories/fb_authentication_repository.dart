@@ -40,6 +40,8 @@ class FirebaseAuthenticationRepository {
 
   Future<User> signInWithGoogle() async {
     final GoogleSignInAccount googleUser = await _googleProvider.signIn();
+    if (googleUser == null) // aborded
+      return null;
     final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
 
     final AuthCredential credential = GoogleAuthProvider.getCredential(
@@ -48,6 +50,7 @@ class FirebaseAuthenticationRepository {
     );
 
     FirebaseUser user = (await _auth.signInWithCredential(credential)).user;
+    print("Sign in : " + user.uid);
     return User(user);
   }
 
@@ -59,8 +62,8 @@ class FirebaseAuthenticationRepository {
 
   }
 
-  logout() {
-
+  logout() async {
+    return _auth.signOut();
   }
 
   delete() {
