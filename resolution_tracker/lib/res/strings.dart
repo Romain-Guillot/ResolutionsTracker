@@ -1,6 +1,11 @@
 
 class Strings {
 
+  static const APP_NAME = "Resolution tracker";
+
+
+  static const LOADING_PAGE_INDICATOR = "Please wait, we checked your profile.";
+
   static const WELCOME_TITLE = "Hi !";
   static const WELCOME_INTRO1 = "You have some new resolutions ?";
   static const WELCOME_INTRO2 = "Great !";
