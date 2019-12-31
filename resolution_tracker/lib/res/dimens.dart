@@ -19,6 +19,8 @@ class Dimens {
   static const SHAPE_MEDIUM_CORNER_RADIUS = 9.0;
   static const SHAPE_LARGE_COMPONENT = 9.0;
 
+  static const MENU_ICON_SIZE = 24.0;
+
   static const FONT_WEIGHT_LIGHT = FontWeight.w300;
   static const FONT_WEIGHT_REGULAR = FontWeight.w400;
   static const FONT_WEIGHT_BOLD = FontWeight.w700;

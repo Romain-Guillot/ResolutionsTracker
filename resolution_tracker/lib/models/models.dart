@@ -9,16 +9,18 @@ class Resolution {
   String title;
   String icon;
   DateTime dateCreated;
-  List<DaysEnum> frequency;
+  Set<DaysEnum> frequency;
   DateTime lastDayVerified;
   List<bool> successHistory;
 
   Resolution.fromJson(Map<String, Object> json) {
     title = json["title"];
-    frequency = (json["frequency"] as List<String>).map((f) => DaysEnum.fromValue(f)).toList();
+    frequency = (json["frequency"] as List<String>).map((f) => DaysEnum.fromValue(f)).toSet();
   }
   
-  Resolution.create(this.title, this.icon, this.frequency);
+  Resolution.create(this.title, this.icon, this.frequency) {
+    dateCreated = DateTime.now();
+  }
 
 
   Map<String, Object> toJson() {
@@ -40,6 +42,7 @@ class User {
 
   User(this._fbUser);
 
+  String get uid => _fbUser.uid;
   String get name => _fbUser?.displayName??"";
   String get profileURL => _fbUser?.photoUrl;
 }

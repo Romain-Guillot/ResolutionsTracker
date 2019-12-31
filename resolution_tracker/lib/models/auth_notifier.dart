@@ -13,17 +13,22 @@ import 'package:resolution_tracker/models/models.dart';
 /// The singleton pattern is achieved with the classic method with a 
 /// factory constructor.
 class AuthenticationNotifier extends ChangeNotifier {
+
+  static final AuthenticationNotifier _instance = AuthenticationNotifier._();
+
+  factory AuthenticationNotifier() {
+    return _instance;
+  }
+
+  AuthenticationNotifier._() {
+    _initUserSnapshot();
+  }
   
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final GoogleSignIn _googleProvider = GoogleSignIn();
 
   bool isInit = false;
   User user;
-
-
-  AuthenticationNotifier() {
-    _initUserSnapshot();
-  }
 
 
   _initUserSnapshot() {

@@ -1,39 +1,91 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
 import 'package:resolution_tracker/models/models.dart';
+import 'package:resolution_tracker/models/resolutions_notifier.dart';
 import 'package:resolution_tracker/res/dimens.dart';
+import 'package:resolution_tracker/res/strings.dart';
+import 'package:resolution_tracker/ui/utils.dart';
 
-class ResolutionEditionWidget extends StatelessWidget {
+class ResolutionEditionWidget extends StatefulWidget {
 
-  final FrequencyFormController frequencyController = FrequencyFormController();
+  @override
+  _ResolutionEditionWidgetState createState() => _ResolutionEditionWidgetState();
+}
+
+class _ResolutionEditionWidgetState extends State<ResolutionEditionWidget> {
+
+  final _formKey = GlobalKey<FormState>();
+
+  FrequencyFormController frequencyController = FrequencyFormController();
+  TextEditingController titleController = TextEditingController();
+
+  bool isLoading = false;
 
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.all(20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          TextFormField(decoration: InputDecoration.collapsed(hintText: "Resolution title"), style: TextStyle(fontSize: 27),),
-          SizedBox(height: Dimens.NORMAL_PADDING,),
-          Text("Frequency"),
-          SizedBox(height: Dimens.NORMAL_PADDING,),
-          Center(
-            child: FrequencyFormField(controller: frequencyController,)
+      child: Stack(
+        children: [
+          Form(
+            key: _formKey,
+            child: ScrollConfiguration(
+                behavior: BasicScrollWithoutGlow(),
+                child: ListView(
+                children: <Widget>[
+                  TextFormField(
+                    controller: titleController,
+                    autofocus: true,
+                    textCapitalization: TextCapitalization.sentences,
+                    decoration: InputDecoration.collapsed(hintText: Strings.ADD_RESOLUTION_TITLE_LABEL), 
+                    style: TextStyle(fontSize: 27, fontWeight: Dimens.FONT_WEIGHT_BOLD),
+                    validator: (value) => value.isNotEmpty ? null : "Please enter the title of your resolution.",
+                  ),
+                  SizedBox(height: Dimens.NORMAL_PADDING,),
+                  Text(Strings.ADD_RESOLUTION_FREQUENCY_LABEL),
+                  SizedBox(height: Dimens.NORMAL_PADDING,),
+                  Center(
+                    child: FrequencyFormField(controller: frequencyController,)
+                  ),
+                  SizedBox(height: Dimens.NORMAL_PADDING,),
+                  Text(Strings.ADD_RESOLTUION_ICON_LABEL),
+                  // Expanded(child: Container(),),
+
+                ],
+              ),
+            ),
           ),
-          SizedBox(height: Dimens.NORMAL_PADDING,),
-          Text("Add an icon"),
-          Expanded(child: Container(),),
           Align(
-            alignment: Alignment.centerRight,
-            child: FlatButton(child: Text("Save my resolution", style: TextStyle(fontWeight: Dimens.FONT_WEIGHT_BOLD, color: Theme.of(context).colorScheme.primary),), onPressed: () => print(frequencyController.values.length),),
+            alignment: Alignment.bottomRight,
+            child: FlatButton(
+              child: Text(isLoading ? "Loading ..." : Strings.ADD_RESOLUTION_SUBMIT, 
+                style: TextStyle(fontWeight: Dimens.FONT_WEIGHT_BOLD, 
+                color: Theme.of(context).colorScheme.primary),
+              ), 
+              onPressed: isLoading ? null : submit,
+            )
           )
-          
-        ],
+        ]
       ),
     );
+  }
+
+  submit() {
+    if (!isLoading && _formKey.currentState.validate()) {
+      setState(() => isLoading = true);
+      Resolution resolution = Resolution.create(titleController.text, null, frequencyController.values);
+      Provider.of<ResolutionsNotifier>(context, listen: false).addResolution(resolution)
+        .then((_) {
+          Navigator.pop(context);
+        })
+        .catchError((e) {
+
+        })
+        .whenComplete(() => setState(() => isLoading = false));
+    }
   }
 }
 
@@ -50,8 +102,14 @@ class FrequencyFormField extends FormField<List<DaysEnum>> {
       children: DaysEnum.values().map((d) => 
           SelectableDay(
             day: d,
-            onSelected: () => (state as _FrequencyFormFieldState).add(d),
-            onDeselected: () => (state as _FrequencyFormFieldState).remove(d),
+            onSelected: () { 
+              (state as _FrequencyFormFieldState).add(d); 
+              FocusScope.of(state.context).requestFocus(FocusNode());
+            },
+            onDeselected: () {
+              (state as _FrequencyFormFieldState).remove(d);
+              FocusScope.of(state.context).requestFocus(FocusNode());
+            },
           )
         ).toList(),
     )

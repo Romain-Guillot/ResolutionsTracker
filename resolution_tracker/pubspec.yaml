@@ -29,6 +29,7 @@ flutter:
   assets:
     - assets/icon.svg
     - assets/google.svg
+    - assets/coffee.svg
 
 
   
