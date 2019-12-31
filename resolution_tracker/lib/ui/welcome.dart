@@ -3,18 +3,20 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:resolution_tracker/repositories/fb_authentication_repository.dart';
+import 'package:resolution_tracker/res/assets.dart';
 import 'package:resolution_tracker/res/colors.dart';
 import 'package:resolution_tracker/res/dimens.dart';
 import 'package:resolution_tracker/res/strings.dart';
 import 'package:resolution_tracker/main.dart';
+import 'package:resolution_tracker/ui/utils.dart';
 
 
 /// Welcome page, display to authenticate the user.
 /// 
-/// Tree :
+/// body :
 ///   - Welcome title
 ///   - App presentation
-///   - Auth area
+/// fab : Auth area
 /// 
 /// Note : navigation to the homepage when the user is logged
 /// is handled directly by the root widget thanks to the provider
@@ -37,27 +39,23 @@ class WelcomePage extends StatelessWidget {
         child: AnnotatedRegion<SystemUiOverlayStyle>(
           value: SystemUiOverlayStyle(
             statusBarColor: Colors.transparent,
+            statusBarIconBrightness: Brightness.light // Warning : by default it's light but if we returned here we want to reset the light icons (homepage sets black icons)
           ),
           child: Scaffold(
+            floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+            floatingActionButton: GoogleSignInButton(onPressed: handleGoogleSignIn),
             body: SafeArea( // safe area is here to manage status and navigation bar color
-              child: Padding(
-                padding: Dimens.SCREEN_MARGIN,
-                child: SizedBox.expand(
-                    child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      SizedBox(
-                        width: double.infinity,
-                        child: Text(Strings.WELCOME_TITLE, style: Theme.of(context).textTheme.title),
-                      ),
-                      SizedBox(height: Dimens.WELCOME_BLOCK_PADDING,),
-                      AppPresentationWidget(),
-                      Expanded(child: SizedBox()),
-                      GoogleSignInButton(onPressed: handleGoogleSignIn)
-                    ],
-                  ),
+              child: ScrollConfiguration(
+                behavior: BasicScrollWithoutGlow(),
+                child: ListView(
+                  padding: Dimens.SCREEN_MARGIN,
+                  children: <Widget>[
+                    Text(Strings.WELCOME_TITLE, style: Theme.of(context).textTheme.title),
+                    SizedBox(height: Dimens.WELCOME_BLOCK_PADDING,),
+                    AppPresentationWidget(),                  
+                  ],
                 ),
-              )
+              ),
             ),
           ),
         )
@@ -72,6 +70,7 @@ class WelcomePage extends StatelessWidget {
   }
 }
 
+
 class AppPresentationWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -80,8 +79,7 @@ class AppPresentationWidget extends StatelessWidget {
         Text(Strings.WELCOME_INTRO1, style: Theme.of(context).textTheme.body1),
         SizedBox(height: Dimens.NORMAL_PADDING,),
         SvgPicture.asset(
-          "assets/icon.svg",
-          semanticsLabel: 'Confetti logo',
+          Assets.APP_ICON,
           width: 200,
         ),
         SizedBox(height: Dimens.NORMAL_PADDING,),
@@ -102,8 +100,9 @@ class GoogleSignInButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RaisedButton(
-      child: RichText(
+    return RaisedButton.icon(
+      icon: SvgPicture.asset(Assets.GOOGLE, height: 24,),
+      label: RichText(
         text: TextSpan(
           style: DefaultTextStyle.of(context).style,
           text: Strings.PROVIDER_AUTH_BTN,

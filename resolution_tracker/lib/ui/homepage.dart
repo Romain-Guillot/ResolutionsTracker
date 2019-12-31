@@ -21,7 +21,7 @@ class HomePage extends StatelessWidget {
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: Builder(
             builder: (context) => Padding(
-            padding: Dimens.SCREEN_MARGIN,
+            padding: EdgeInsets.symmetric(horizontal: Dimens.SCREEN_MARGIN_X),
             child: Row(
               children: <Widget>[
                 ProfileButtonWidget(user: Provider.of<AuthenticationNotifier>(context).user,),

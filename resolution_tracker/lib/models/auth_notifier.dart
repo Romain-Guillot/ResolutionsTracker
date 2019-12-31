@@ -25,7 +25,4 @@ class AuthenticationNotifier extends ChangeNotifier {
       onError: (_) {isInit = true; notifyListeners();}
     );
   }
-
-
-
 }

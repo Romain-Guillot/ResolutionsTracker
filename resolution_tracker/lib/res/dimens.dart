@@ -7,7 +7,7 @@ class Dimens {
 
   static const SCREEN_MARGIN_X = 20.0;
   static const SCREEN_MARGIN_Y = 20.0;
-  static const EdgeInsets SCREEN_MARGIN = const EdgeInsets.fromLTRB(Dimens.SCREEN_MARGIN_Y, Dimens.SCREEN_MARGIN_X, Dimens.SCREEN_MARGIN_Y, Dimens.SCREEN_MARGIN_X);
+  static const EdgeInsets SCREEN_MARGIN = const EdgeInsets.symmetric(vertical: Dimens.SCREEN_MARGIN_Y, horizontal: Dimens.SCREEN_MARGIN_X);
 
 
   static const WELCOME_BLOCK_PADDING = 40.0;

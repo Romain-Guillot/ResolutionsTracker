@@ -13,10 +13,16 @@ class Resolution {
   DateTime lastDayVerified;
   List<bool> successHistory;
 
-  Resolution(this.id, this.title, this.icon, this.dateCreated, this.frequency, this.lastDayVerified, this.successHistory);
+  Resolution.fromJson(Map<String, String> json) {
+    
+  }
   
   Resolution.create(this.title, this.icon, this.frequency);
 
+
+  Map<String, String> toJson() {
+    return {};
+  }
 }
 
 
