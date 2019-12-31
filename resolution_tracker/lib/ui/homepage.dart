@@ -19,52 +19,47 @@ class HomePage extends StatelessWidget {
         statusBarColor: Colors.transparent,
         statusBarIconBrightness: Brightness.dark,
       ),
-      child: ChangeNotifierProvider(
-        create: (_) => ResolutionsNotifier(),
-        child: Scaffold(
-          floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-          floatingActionButton: Builder(
-              builder: (context) => Padding(
-              padding: EdgeInsets.symmetric(horizontal: Dimens.SCREEN_MARGIN_X),
-              child: Row(
-                children: <Widget>[
-                  ProfileButtonWidget(user: Provider.of<AuthenticationNotifier>(context).user,),
-                  Expanded(child: SizedBox(),),
-                  FloatingActionButton(
-                    backgroundColor: Theme.of(context).colorScheme.primary,
-                    child: Icon(Icons.add),
-                    onPressed: () => handleNewResolutionButton(context),
-                  ),
-                ],
-              ),
+      child: Scaffold(
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        floatingActionButton: Builder(
+          builder: (context) => Padding(
+            padding: EdgeInsets.symmetric(horizontal: Dimens.SCREEN_MARGIN_X),
+            child: Row(
+              children: <Widget>[
+                ProfileButtonWidget(user: Provider.of<AuthenticationNotifier>(context).user,),
+                Expanded(child: SizedBox(),),
+                FloatingActionButton(
+                  backgroundColor: Theme.of(context).colorScheme.primary,
+                  child: Icon(Icons.add),
+                  onPressed: () => handleNewResolutionButton(context),
+                ),
+              ],
             ),
           ),
-          body: SafeArea( // safe area is here to manage status and navigation bar color
-            child: Consumer<ResolutionsNotifier>(
-              builder: (context, resolutionsProvider, child) =>
-                ListView.builder(
-                  itemCount: resolutionsProvider.length,
-                  itemBuilder: (context, position) => 
-                    Container(
-                      padding: EdgeInsets.symmetric(horizontal: Dimens.SCREEN_MARGIN_X, vertical: Dimens.NORMAL_PADDING),
-                      color: position % 2 == 0 ? Colors.transparent : Colors.grey[200], 
-                      child: ResolutionItem(resolutionsProvider.resolutions.elementAt(position))
-                    ),
-                ),
-            )
-          ),
-    ),
-      ));
+        ),
+        body: SafeArea( // safe area is here to manage status and navigation bar color
+          child: Consumer<ResolutionsNotifier>(
+            builder: (context, resolutionsProvider, child) =>
+              ListView.builder(
+                itemCount: resolutionsProvider.length,
+                itemBuilder: (context, position) => 
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: Dimens.SCREEN_MARGIN_X, vertical: Dimens.NORMAL_PADDING),
+                    color: position % 2 == 0 ? Colors.transparent : Colors.grey[200], 
+                    child: ResolutionItem(resolutionsProvider.resolutions.elementAt(position))
+                  ),
+              ),
+          )
+        ),
+      )
+    );
   }
 
 
   handleNewResolutionButton(context) {
     showModalBottomSheet(
       context: context, 
-      builder: (_) => ChangeNotifierProvider.value( // Bottom sheet will no be in the homepage tree where the notifier is.
-        value: Provider.of<ResolutionsNotifier>(context), 
-        child: ResolutionEditionWidget()
-      ),
+      builder: (_) =>  ResolutionEditionWidget(),
       shape: bottomSheetShape 
     );
   }

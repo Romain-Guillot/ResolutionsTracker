@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:resolution_tracker/models/auth_notifier.dart';
+import 'package:resolution_tracker/models/resolutions_notifier.dart';
 import 'package:resolution_tracker/res/colors.dart';
 import 'package:resolution_tracker/res/dimens.dart';
 import 'package:resolution_tracker/res/strings.dart';
@@ -10,10 +11,13 @@ import 'package:resolution_tracker/ui/welcome.dart';
 
 void main() {
   runApp(
-    ChangeNotifierProvider(
-      create: (_) => AuthenticationNotifier(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => AuthenticationNotifier()),
+        ChangeNotifierProvider(create: (_) => ResolutionsNotifier()),
+      ],
       child: MyApp()
-    ),
+    )
   );
 } 
 
