@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 ///
 ///
-class Resolution {
+class Resolution implements Comparable<Resolution> {
 
   String id;
   String title;
@@ -15,7 +15,10 @@ class Resolution {
 
   Resolution.fromJson(Map<String, Object> json) {
     title = json["title"];
-    frequency = (json["frequency"] as List<String>).map((f) => DaysEnum.fromValue(f)).toSet();
+    // frequency = (json["frequency"] as List<String>).map((f) => DaysEnum.fromValue(f)).toSet();
+
+    if (dateCreated == null)
+       dateCreated = DateTime(0);
   }
   
   Resolution.create(this.title, this.icon, this.frequency) {
@@ -32,6 +35,11 @@ class Resolution {
       "lastDayVerified" : lastDayVerified,
       "successHistory" : successHistory
     };
+  }
+
+  @override
+  int compareTo(Resolution other) {
+    return dateCreated.compareTo(other.dateCreated);
   }
 }
 

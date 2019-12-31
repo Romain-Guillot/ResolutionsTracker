@@ -8,6 +8,7 @@ import 'package:resolution_tracker/res/dimens.dart';
 import 'package:resolution_tracker/res/strings.dart';
 import 'package:resolution_tracker/ui/utils.dart';
 
+
 class ResolutionEditionWidget extends StatefulWidget {
 
   @override
@@ -42,7 +43,7 @@ class _ResolutionEditionWidgetState extends State<ResolutionEditionWidget> {
                     textCapitalization: TextCapitalization.sentences,
                     decoration: InputDecoration.collapsed(hintText: Strings.ADD_RESOLUTION_TITLE_LABEL), 
                     style: TextStyle(fontSize: 27, fontWeight: Dimens.FONT_WEIGHT_BOLD),
-                    validator: (value) => value.isNotEmpty ? null : "Please enter the title of your resolution.",
+                    validator: (value) => value.isNotEmpty ? null : Strings.ADD_RESOLUTION_TITLE_EMPTY_ERROR,
                   ),
                   SizedBox(height: Dimens.NORMAL_PADDING,),
                   Text(Strings.ADD_RESOLUTION_FREQUENCY_LABEL),

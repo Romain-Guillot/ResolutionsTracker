@@ -23,23 +23,34 @@ class ResolutionsNotifier extends ChangeNotifier {
   AuthenticationNotifier _authProvider;
   Firestore _firestore;
 
+  List<Resolution> _userResolutions = [];
+
+  List<Resolution> get resolutions => _userResolutions;
+  int get length => _userResolutions?.length??0;
+
   ResolutionsNotifier._() {
     _firestore = Firestore.instance;
     _authProvider = AuthenticationNotifier();
+    initUserResolutions();
   }
 
 
-  Stream<List<Resolution>> allResolutions() {
+  initUserResolutions() {
+    String userUID = _authProvider.user.uid;
     StreamTransformer<QuerySnapshot, List<Resolution>> streamTransformer = StreamTransformer.fromHandlers(
       handleData: (snap, sink) {
-        List resolutions = [];
+        print(snap.documents.length);
+        List<Resolution> resolutions = [];
         for (DocumentSnapshot docSnap in snap.documents) {
           resolutions.add(Resolution.fromJson(docSnap.data));
         }
         sink.add(resolutions);
       } 
     );
-    return _firestore.collection("path").snapshots().transform(streamTransformer);
+    _firestore.collection(userUID).orderBy("dateCreated", descending: true).snapshots().transform(streamTransformer).listen((data) {
+      _userResolutions = data;
+      notifyListeners();
+    });
   }
 
 
