@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:resolution_tracker/repositories/fb_authentication_repository.dart';
+import 'package:provider/provider.dart';
 import 'package:resolution_tracker/res/assets.dart';
 import 'package:resolution_tracker/res/colors.dart';
 import 'package:resolution_tracker/res/dimens.dart';
 import 'package:resolution_tracker/res/strings.dart';
 import 'package:resolution_tracker/main.dart';
 import 'package:resolution_tracker/ui/utils.dart';
+import 'package:resolution_tracker/models/auth_notifier.dart';
 
 
 /// Welcome page, display to authenticate the user.
@@ -43,7 +44,7 @@ class WelcomePage extends StatelessWidget {
           ),
           child: Scaffold(
             floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-            floatingActionButton: GoogleSignInButton(onPressed: handleGoogleSignIn),
+            floatingActionButton: GoogleSignInButton(onPressed: () => handleGoogleSignIn(context)),
             body: SafeArea( // safe area is here to manage status and navigation bar color
               child: ScrollConfiguration(
                 behavior: BasicScrollWithoutGlow(),
@@ -63,11 +64,12 @@ class WelcomePage extends StatelessWidget {
   }
 
 
-  handleGoogleSignIn() {
-    FirebaseAuthenticationRepository().signInWithGoogle()
+  handleGoogleSignIn(context) {
+    Provider.of<AuthenticationNotifier>(context, listen: false).signInWithGoogle()
       .then((_) => {})
       .catchError((e) => {});
   }
+  
 }
 
 

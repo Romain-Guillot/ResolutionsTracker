@@ -13,17 +13,26 @@ class Resolution {
   DateTime lastDayVerified;
   List<bool> successHistory;
 
-  Resolution.fromJson(Map<String, String> json) {
-    
+  Resolution.fromJson(Map<String, Object> json) {
+    title = json["title"];
+    frequency = (json["frequency"] as List<String>).map((f) => DaysEnum.fromValue(f)).toList();
   }
   
   Resolution.create(this.title, this.icon, this.frequency);
 
 
-  Map<String, String> toJson() {
-    return {};
+  Map<String, Object> toJson() {
+    return {
+      "title" : title,
+      "icon" : icon,
+      "dateCreated" : dateCreated,
+      "frequency" : frequency.map((f) => f.value).toList(),
+      "lastDayVerified" : lastDayVerified,
+      "successHistory" : successHistory
+    };
   }
 }
+
 
 
 class User {
@@ -31,8 +40,8 @@ class User {
 
   User(this._fbUser);
 
-  String get name => _fbUser.displayName??"";
-  String get profileURL => _fbUser.photoUrl;
+  String get name => _fbUser?.displayName??"";
+  String get profileURL => _fbUser?.photoUrl;
 }
 
 
@@ -58,5 +67,14 @@ class DaysEnum {
 
   DaysEnum._(this._value);
 
-  List<DaysEnum> values() => [MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY];
+  static DaysEnum fromValue(String value) {
+    for (DaysEnum e in DaysEnum.values()) {
+      if (e.value == value) return e;
+    }
+    return null;
+  }
+
+  static List<DaysEnum> values() => [MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY];
+
+
 }

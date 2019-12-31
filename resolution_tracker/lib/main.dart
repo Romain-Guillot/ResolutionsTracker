@@ -84,6 +84,7 @@ class MyApp extends StatelessWidget {
       theme: appTheme,
       home: Consumer<AuthenticationNotifier>(
           builder: (context, authNotifier, child) {
+            print(authNotifier.user);
             if (!authNotifier.isInit)
               return LoadingWidget();
             if (authNotifier.user == null)

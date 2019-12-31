@@ -1,11 +1,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:provider/provider.dart';
 import 'package:resolution_tracker/main.dart';
+import 'package:resolution_tracker/models/auth_notifier.dart';
 import 'package:resolution_tracker/models/models.dart';
-import 'package:resolution_tracker/repositories/fb_authentication_repository.dart';
 import 'package:resolution_tracker/res/dimens.dart';
 import 'package:resolution_tracker/res/strings.dart';
+
 
 
 class ProfileButtonWidget extends StatefulWidget {
@@ -28,7 +30,7 @@ class _ProfileButtonWidgetState extends State<ProfileButtonWidget> {
         child: Row(
           children: <Widget>[
             if (widget.user.profileURL == null)
-              Image.network(widget.user.profileURL),
+              Icon(Icons.account_circle, size: 25),
             if (widget.user.profileURL != null)
               ClipOval(
                 child: Image.network(
@@ -58,7 +60,7 @@ class _ProfileButtonWidgetState extends State<ProfileButtonWidget> {
           ListTile(
             title: Text("Delete my account permanently"), 
             leading: Icon(Icons.delete_forever),
-            onTap: () => onDeleteAccount(context),
+            onTap: onDeleteAccount,
           ),
         ],
       ),
@@ -67,11 +69,11 @@ class _ProfileButtonWidgetState extends State<ProfileButtonWidget> {
   }
 
   onLogOut() {
-    FirebaseAuthenticationRepository().logout(); // TODO : handle errors
+    Provider.of<AuthenticationNotifier>(context, listen: false).logout(); // TODO : handle errors
     Navigator.pop(context);
   }
 
-  onDeleteAccount(context) {
+  onDeleteAccount() {
     Navigator.pop(context);
     showDialog(context: context, builder: (context) => AlertDialog(
       shape: largeShape,
@@ -85,7 +87,7 @@ class _ProfileButtonWidgetState extends State<ProfileButtonWidget> {
         RaisedButton(
           child: Text("Yes !"), 
           onPressed: () async {
-            await FirebaseAuthenticationRepository().delete();
+            await Provider.of<AuthenticationNotifier>(context, listen: false).delete();
             Navigator.pop(context);
             
           }),
