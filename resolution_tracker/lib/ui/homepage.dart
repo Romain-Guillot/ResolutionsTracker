@@ -5,10 +5,12 @@ import 'package:provider/provider.dart';
 import 'package:resolution_tracker/models/auth_notifier.dart';
 import 'package:resolution_tracker/models/models.dart';
 import 'package:resolution_tracker/models/resolutions_notifier.dart';
+import 'package:resolution_tracker/res/colors.dart';
 import 'package:resolution_tracker/res/dimens.dart';
 import 'package:resolution_tracker/ui/resolution_edition.dart';
 import 'package:resolution_tracker/main.dart';
 import 'package:resolution_tracker/ui/user_widget.dart';
+import 'package:resolution_tracker/ui/utils.dart';
 
 
 class HomePage extends StatelessWidget {
@@ -43,11 +45,10 @@ class HomePage extends StatelessWidget {
               ListView.builder(
                 itemCount: resolutionsProvider.length,
                 itemBuilder: (context, position) => 
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: Dimens.SCREEN_MARGIN_X, vertical: Dimens.NORMAL_PADDING),
-                    color: position % 2 == 0 ? Colors.transparent : Colors.grey[200], 
-                    child: ResolutionItem(resolutionsProvider.resolutions.elementAt(position))
-                  ),
+                  ResolutionItem(
+                    resolution: resolutionsProvider.resolutions.elementAt(position),
+                    background: position % 2 == 0 ? Colors.transparent : Colors.grey[200],
+                  )
               ),
           )
         ),
@@ -57,24 +58,48 @@ class HomePage extends StatelessWidget {
 
 
   handleNewResolutionButton(context) {
-    showModalBottomSheet(
-      context: context, 
-      builder: (_) =>  ResolutionEditionWidget(),
-      shape: bottomSheetShape 
-    );
+    ResolutionEditionWidget.show(context);
   }
 }
+
 
 class ResolutionItem extends StatelessWidget {
 
   final Resolution resolution;
+  final Color background;
 
-  ResolutionItem(this.resolution);
+  ResolutionItem({@required this.resolution, this.background});
 
   @override
   Widget build(BuildContext context) {
-    return Text(resolution.title);
+    return ListItemMenu(
+      actions: <Widget>[
+        IconButton(
+          icon: Icon(Icons.edit, color: ColorsApp.editIconColor),
+          onPressed: () => onEdit(context),
+        ),
+        IconButton(
+          icon: Icon(Icons.delete, color: Theme.of(context).colorScheme.error),
+          onPressed: () => onDelete(context),
+        )
+      ],
+      content: Container(
+        padding: EdgeInsets.symmetric(horizontal: Dimens.SCREEN_MARGIN_X, vertical: Dimens.NORMAL_PADDING),
+        child: Text(resolution.title, style: Theme.of(context).textTheme.subhead,),
+      ),
+      background: background,
+    );      
   }
+
+  onEdit(context) {
+    ResolutionEditionWidget.show(context);
+  }
+
+  onDelete(context) {
+
+  }
+
+
 }
 
 

@@ -29,6 +29,8 @@ ShapeBorder largeShape = RoundedRectangleBorder(borderRadius: BorderRadius.circu
 TextTheme appTextTheme = TextTheme(
   title: TextStyle(fontSize: 45.0, fontWeight: Dimens.FONT_WEIGHT_BOLD),
   headline: TextStyle(fontSize: 30, fontWeight: Dimens.FONT_WEIGHT_BOLD),
+  subtitle: TextStyle(fontSize: 16, fontWeight: Dimens.FONT_WEIGHT_BOLD),
+  subhead: TextStyle(fontSize: 25, fontWeight: Dimens.FONT_WEIGHT_BOLD)
 );
 
 
@@ -39,7 +41,7 @@ ColorScheme appColorScheme = ColorScheme(
   secondaryVariant: ColorsApp.secondaryColor,
   surface: Color(0xFFFFFFFF),
   background: Color(0xFFFFFFFF),
-  error: ColorsApp.secondaryColor,
+  error: Color(0xfff03e3e),
   onPrimary: Color(0xFF000000),
   onSecondary: Color(0xFF000000),
   onError: Color(0xFF000000),
@@ -52,9 +54,12 @@ ThemeData appTheme = ThemeData(
   primaryColor: ColorsApp.primaryColor,
 
   colorScheme: appColorScheme,
+  backgroundColor: Colors.white,
+  scaffoldBackgroundColor: Colors.white,
 
   // Shape theming (small, medium large)
   buttonTheme: ButtonThemeData(
+    minWidth: 0,
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(Dimens.SHAPE_SMALL_CORNER_RADIUS))
   ),
   // inputDecorationTheme: ,

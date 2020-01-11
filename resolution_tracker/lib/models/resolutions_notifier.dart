@@ -39,10 +39,11 @@ class ResolutionsNotifier extends ChangeNotifier {
     String userUID = _authProvider.user.uid;
     StreamTransformer<QuerySnapshot, List<Resolution>> streamTransformer = StreamTransformer.fromHandlers(
       handleData: (snap, sink) {
-        print(snap.documents.length);
         List<Resolution> resolutions = [];
         for (DocumentSnapshot docSnap in snap.documents) {
-          resolutions.add(Resolution.fromJson(docSnap.data));
+          Resolution r = Resolution.fromJson(docSnap.data);
+          resolutions.add(r);
+          print(r);
         }
         sink.add(resolutions);
       } 
@@ -54,9 +55,9 @@ class ResolutionsNotifier extends ChangeNotifier {
   }
 
 
-  Future<void> addResolution(Resolution resolution) {
+  Future<void> addResolution(Resolution resolution) async {
     String userUID = _authProvider.user.uid;
-    return _firestore.collection(userUID).add(resolution.toJson());
+    await _firestore.collection(userUID).add(resolution.toJson());
   }
 
 

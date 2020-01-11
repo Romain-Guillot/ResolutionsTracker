@@ -15,7 +15,7 @@ class Resolution implements Comparable<Resolution> {
 
   Resolution.fromJson(Map<String, Object> json) {
     title = json["title"];
-    // frequency = (json["frequency"] as List<String>).map((f) => DaysEnum.fromValue(f)).toSet();
+    frequency = (json["frequency"] as List<dynamic>).cast<String>().map((f) => DaysEnum.fromValue(f)).toSet();
 
     if (dateCreated == null)
        dateCreated = DateTime(0);
@@ -41,6 +41,9 @@ class Resolution implements Comparable<Resolution> {
   int compareTo(Resolution other) {
     return dateCreated.compareTo(other.dateCreated);
   }
+
+  @override
+  String toString() => "Theme: $title - $icon ($dateCreated). Frequency: $frequency";
 }
 
 
@@ -87,5 +90,7 @@ class DaysEnum {
 
   static List<DaysEnum> values() => [MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY];
 
+  @override
+  String toString() => value;
 
 }
