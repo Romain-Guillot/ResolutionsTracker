@@ -22,8 +22,8 @@ class ResolutionEditionWidget extends StatefulWidget {
   static show(BuildContext context, {Resolution resolution}) {
     showModalBottomSheet(
       context: context, 
-      builder: (_) =>  ResolutionEditionWidget(),
-      shape: bottomSheetShape
+      builder: (_) =>  ResolutionEditionWidget(resolution: resolution),
+      shape: bottomSheetShape,
     );
   }
 }
@@ -33,10 +33,18 @@ class _ResolutionEditionWidgetState extends State<ResolutionEditionWidget> {
 
   final _formKey = GlobalKey<FormState>();
 
-  FrequencyFormController frequencyController = FrequencyFormController();
-  TextEditingController titleController = TextEditingController();
+  FrequencyFormController frequencyController;
+  TextEditingController titleController;
 
   bool isLoading = false;
+
+  @override
+  void initState() {
+    super.initState();
+    frequencyController =FrequencyFormController();
+    titleController = TextEditingController(text: widget.resolution?.title);
+    print(widget.resolution?.title);
+  }
 
 
   @override
@@ -54,7 +62,7 @@ class _ResolutionEditionWidgetState extends State<ResolutionEditionWidget> {
                   children: <Widget>[
                     TextFormField(
                       controller: titleController,
-                      autofocus: true,
+                      autofocus: widget.resolution == null,
                       textCapitalization: TextCapitalization.sentences,
                       decoration: InputDecoration.collapsed(hintText: Strings.ADD_RESOLUTION_TITLE_LABEL), 
                       style: TextStyle(fontSize: 27, fontWeight: Dimens.FONT_WEIGHT_BOLD),

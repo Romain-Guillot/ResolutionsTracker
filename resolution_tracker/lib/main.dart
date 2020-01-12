@@ -30,7 +30,9 @@ TextTheme appTextTheme = TextTheme(
   title: TextStyle(fontSize: 45.0, fontWeight: Dimens.FONT_WEIGHT_BOLD),
   headline: TextStyle(fontSize: 30, fontWeight: Dimens.FONT_WEIGHT_BOLD),
   subtitle: TextStyle(fontSize: 16, fontWeight: Dimens.FONT_WEIGHT_BOLD),
-  subhead: TextStyle(fontSize: 25, fontWeight: Dimens.FONT_WEIGHT_BOLD)
+  subhead: TextStyle(fontSize: 16, fontWeight: Dimens.FONT_WEIGHT_REGULAR),
+  body1: TextStyle(fontSize: 16, fontWeight: Dimens.FONT_WEIGHT_REGULAR),
+  display1: TextStyle(fontSize: 25, fontWeight: Dimens.FONT_WEIGHT_BOLD, color: Colors.black)
 );
 
 

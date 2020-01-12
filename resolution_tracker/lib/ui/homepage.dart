@@ -8,7 +8,6 @@ import 'package:resolution_tracker/models/resolutions_notifier.dart';
 import 'package:resolution_tracker/res/colors.dart';
 import 'package:resolution_tracker/res/dimens.dart';
 import 'package:resolution_tracker/ui/resolution_edition.dart';
-import 'package:resolution_tracker/main.dart';
 import 'package:resolution_tracker/ui/user_widget.dart';
 import 'package:resolution_tracker/ui/utils.dart';
 
@@ -85,14 +84,14 @@ class ResolutionItem extends StatelessWidget {
       ],
       content: Container(
         padding: EdgeInsets.symmetric(horizontal: Dimens.SCREEN_MARGIN_X, vertical: Dimens.NORMAL_PADDING),
-        child: Text(resolution.title, style: Theme.of(context).textTheme.subhead,),
+        child: Text(resolution.title, style: Theme.of(context).textTheme.display1,),
       ),
       background: background,
     );      
   }
 
   onEdit(context) {
-    ResolutionEditionWidget.show(context);
+    ResolutionEditionWidget.show(context, resolution: resolution);
   }
 
   onDelete(context) {
