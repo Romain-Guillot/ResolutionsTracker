@@ -27,6 +27,9 @@ class Strings {
   static const ADD_RESOLUTION_ERROR = "An error occured, please try again";
   static ADD_RESOLUTION_SUCCESS(String e) => "Resolution $e successfully added";
 
+  static const DELETE_RESOLUTION_TITLE = "Are you sure ?";
+  static const DELETE_RESOLUTION_INFO = "Your resolution and all the progress associated with it will be permanently erased.";
+
   static const DELETE_ACCOUNT_TITLE = "Are you sure ?";
   static const DELETE_ACCOUNT_INFO = "Your account and all associated data will be permanently deleted. You will never be able to recover your resolutions again.";
 

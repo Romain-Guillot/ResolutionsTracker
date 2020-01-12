@@ -29,26 +29,28 @@ class _ProfileButtonWidgetState extends State<ProfileButtonWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      borderRadius: BorderRadius.circular(99),
-      child: Row(
-        children: <Widget>[
-          if (widget.user.profileURL == null)
-            Icon(Icons.account_circle, size: 25),
-          if (widget.user.profileURL != null)
-            ClipOval(
-              child: Image.network(
-                widget.user.profileURL,
-                height: 25,
-                width: 25,
-                fit: BoxFit.cover,
-              )
-            ),
-          SizedBox(width: Dimens.SMALL_PADDING,),
-          Text(widget.user.name.toUpperCase(), style: TextStyle(fontWeight: Dimens.FONT_WEIGHT_BOLD, fontSize: 13),)
-        ],
+    return ButtonTheme.fromButtonThemeData(
+      data: Theme.of(context).buttonTheme.copyWith(padding: EdgeInsets.all(0)),
+      child: FlatButton(
+        child: Row(
+          children: <Widget>[
+            if (widget.user.profileURL == null)
+              Icon(Icons.account_circle, size: Dimens.MENU_ICON_SIZE),
+            if (widget.user.profileURL != null)
+              ClipOval(
+                child: Image.network(
+                  widget.user.profileURL,
+                  height: 25,
+                  width: 25,
+                  fit: BoxFit.cover,
+                )
+              ),
+            SizedBox(width: Dimens.SMALL_PADDING,),
+            Text(widget.user.name.toUpperCase(), style: TextStyle(fontWeight: Dimens.FONT_WEIGHT_BOLD, fontSize: 13),)
+          ],
+        ),
+        onPressed: () => onClick(context),
       ),
-      onTap: () => onClick(context),
     );
   }
 

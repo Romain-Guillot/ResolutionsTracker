@@ -7,6 +7,7 @@ import 'package:resolution_tracker/models/models.dart';
 import 'package:resolution_tracker/models/resolutions_notifier.dart';
 import 'package:resolution_tracker/res/colors.dart';
 import 'package:resolution_tracker/res/dimens.dart';
+import 'package:resolution_tracker/res/strings.dart';
 import 'package:resolution_tracker/ui/resolution_edition.dart';
 import 'package:resolution_tracker/ui/user_widget.dart';
 import 'package:resolution_tracker/ui/utils.dart';
@@ -95,7 +96,15 @@ class ResolutionItem extends StatelessWidget {
   }
 
   onDelete(context) {
-
+    AlertDialogFactory.show(
+      context: context,
+      title: Text(Strings.DELETE_RESOLUTION_TITLE),
+      content: Text(Strings.DELETE_RESOLUTION_INFO),
+      onYes: () async {
+        await Provider.of<ResolutionsNotifier>(context, listen: false).deleteResolution(resolution.id);
+        Navigator.pop(context);
+      }
+    );
   }
 
 
