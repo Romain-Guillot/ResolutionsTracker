@@ -91,10 +91,23 @@ class ResolutionItem extends StatelessWidget {
       ],
       content: Container(
         padding: EdgeInsets.symmetric(horizontal: Dimens.SCREEN_MARGIN_X, vertical: Dimens.NORMAL_PADDING),
-        child: Text(resolution.title, style: Theme.of(context).textTheme.display1,),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text(resolution.title, style: Theme.of(context).textTheme.display1),
+            SizedBox(height: Dimens.NORMAL_PADDING),
+            ResolutionCounters(successCounter: resolution.success, failedCounter: resolution.failed),
+            if (true)
+              ...[
+                SizedBox(height: Dimens.NORMAL_PADDING),
+                ResolutionChecker(),
+              ]
+            
+          ],
+        ),
       ),
       background: background,
-    );      
+    );
   }
 
   onEdit(context) {
@@ -115,10 +128,73 @@ class ResolutionItem extends StatelessWidget {
       }
     );
   }
+}
 
-  
+class ResolutionCounters extends StatelessWidget {
 
+  final int successCounter;
+  final int failedCounter;
 
+  ResolutionCounters({@required this.successCounter, @required this.failedCounter});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: <Widget>[
+        Expanded(
+          flex: 1,
+          child: counterText(context, counter: successCounter, label: "jours tenus !", color: Colors.green)
+        ),
+        Expanded(
+          flex: 1,
+          child: counterText(context, counter: failedCounter, label: "jours manqués", color: Theme.of(context).colorScheme.error)
+        )
+      ],
+    );
+  }
+
+  Widget counterText(context, {@required num counter, @required String label, @required Color color}) {
+    return RichText(
+      text: TextSpan(
+        style: TextStyle(color: color, fontSize: 20, fontWeight: Dimens.FONT_WEIGHT_BOLD),
+        text: counter.toString(),
+        children: [TextSpan(
+          text: " " + label, 
+          style: TextStyle(color: Theme.of(context).colorScheme.onSurface, fontSize: 14, fontWeight: Dimens.FONT_WEIGHT_REGULAR)
+        )]
+      ),
+    );
+  }
+}
+
+class ResolutionChecker extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: Dimens.NORMAL_PADDING),
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.surface,
+        borderRadius: BorderRadius.circular(Dimens.SHAPE_MEDIUM_CORNER_RADIUS),
+        boxShadow: [BoxShadow(color: Colors.black.withAlpha(50), blurRadius: 5.0, spreadRadius: 1.0, offset: Offset(3, 3),)]
+      ),
+      child: Row(
+        children: <Widget>[
+          Expanded(child: Text("12 janvier")),
+          FlatButton.icon(
+            icon: Icon(Icons.check, color: Colors.green,),
+            label: Text("J'ai tenu !"),
+            textColor: Colors.green,
+            onPressed: () {},
+          ),
+          IconButton(
+            icon: Icon(Icons.close),
+            color: Theme.of(context).colorScheme.error,
+            onPressed: () {},
+          )
+        ],
+      ),
+    );
+  }
 }
 
 

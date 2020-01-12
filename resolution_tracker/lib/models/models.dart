@@ -14,9 +14,13 @@ class Resolution implements Comparable<Resolution> {
   DateTime lastDayVerified;
   List<bool> successHistory;
 
+  int get success => successHistory.where((b) => b).length;
+  int get failed => successHistory.length - success;
+
   Resolution.fromJson({@required this.id, Map<String, Object> data}) {
     title = data["title"];
     frequency = (data["frequency"] as List<dynamic>).cast<String>().map((f) => DaysEnum.fromValue(f)).toSet();
+    successHistory = [true, true, true, false];
 
     if (dateCreated == null)
        dateCreated = DateTime(0);
