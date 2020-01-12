@@ -9,6 +9,7 @@ import 'package:resolution_tracker/models/models.dart';
 import 'package:resolution_tracker/res/assets.dart';
 import 'package:resolution_tracker/res/dimens.dart';
 import 'package:resolution_tracker/res/strings.dart';
+import 'package:resolution_tracker/ui/utils.dart';
 
 
 
@@ -82,24 +83,14 @@ class _ProfileButtonWidgetState extends State<ProfileButtonWidget> {
 
   onDeleteAccount() {
     Navigator.pop(context);
-    showDialog(context: context, builder: (context) => AlertDialog(
-      shape: largeShape,
+    AlertDialogFactory.show(
+      context: context, 
       title: Text(Strings.DELETE_ACCOUNT_TITLE),
-      titleTextStyle: Theme.of(context).textTheme.headline,
-      contentTextStyle: Theme.of(context).textTheme.body1,
       content: Text(Strings.DELETE_ACCOUNT_INFO),
-      actions: <Widget>[
-        RaisedButton(
-          child: Text("Cancel"), 
-          onPressed: () => Navigator.pop(context),),
-        RaisedButton(
-          child: Text("Yes !"), 
-          onPressed: () async {
-            await Provider.of<AuthenticationNotifier>(context, listen: false).delete();
-            Navigator.pop(context);
-            
-          }),
-      ],
-    ));
+      onYes: () async {
+        await Provider.of<AuthenticationNotifier>(context, listen: false).delete();
+        Navigator.pop(context);
+      }
+    );
   }
 }

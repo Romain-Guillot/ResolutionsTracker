@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:resolution_tracker/main.dart';
 import 'package:resolution_tracker/res/dimens.dart';
 
 class BasicScrollWithoutGlow extends ScrollBehavior {
@@ -33,7 +34,28 @@ class SnackbarFactory {
   static showErrorSnackbar({@required BuildContext context, @required Widget content}) {
     _showSnackbar(context, content, Theme.of(context).colorScheme.error);
   }
+}
 
+
+class AlertDialogFactory {
+  static show({@required BuildContext context, @required Widget title, @required Widget content, @required Function onYes}) {
+     showDialog(context: context, builder: (context) => AlertDialog(
+      shape: largeShape,
+      titleTextStyle: Theme.of(context).textTheme.headline,
+      contentTextStyle: Theme.of(context).textTheme.body1,
+      title: title,
+      content: content,
+      actions: <Widget>[
+        RaisedButton(
+          child: Text("Cancel"), 
+          onPressed: () => Navigator.pop(context)),
+        RaisedButton(
+          child: Text("Yes !"), 
+          onPressed: onYes
+        )
+      ],
+    ));
+  }
 }
 
 
@@ -85,6 +107,7 @@ class _ListItemMenuState extends State<ListItemMenu> {
   }
 
   showMenu() {
+    // we get the content widget size (to show a menu with the same dimensions)
     final RenderBox renderBoxRed = _key.currentContext.findRenderObject();
     sizePriorMenuIsShown = renderBoxRed.size;
     setState(() => menuIsShown = true);
