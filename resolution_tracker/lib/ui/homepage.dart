@@ -160,7 +160,7 @@ class ResolutionCounters extends StatelessWidget {
         text: counter.toString(),
         children: [TextSpan(
           text: " " + label, 
-          style: TextStyle(color: Theme.of(context).colorScheme.onSurface, fontSize: 14, fontWeight: Dimens.FONT_WEIGHT_REGULAR)
+          style: Theme.of(context).textTheme.overline
         )]
       ),
     );
@@ -179,16 +179,16 @@ class ResolutionChecker extends StatelessWidget {
       ),
       child: Row(
         children: <Widget>[
-          Expanded(child: Text("12 janvier")),
+          Expanded(child: Text("12 janvier".toUpperCase(), style: TextStyle(fontSize: 13, fontWeight: Dimens.FONT_WEIGHT_BOLD),)),
           FlatButton.icon(
             icon: Icon(Icons.check, color: Colors.green,),
             label: Text("J'ai tenu !"),
             textColor: Colors.green,
             onPressed: () {},
           ),
-          IconButton(
-            icon: Icon(Icons.close),
-            color: Theme.of(context).colorScheme.error,
+          FlatButton(
+            child: Icon(Icons.close, color: Theme.of(context).colorScheme.error),
+            textColor: Theme.of(context).colorScheme.error,
             onPressed: () {},
           )
         ],

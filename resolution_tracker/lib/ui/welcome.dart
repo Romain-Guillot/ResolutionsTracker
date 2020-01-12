@@ -104,14 +104,17 @@ class GoogleSignInButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return RaisedButton.icon(
       icon: SvgPicture.asset(Assets.GOOGLE, height: 24,),
-      label: RichText(
-        text: TextSpan(
-          style: DefaultTextStyle.of(context).style,
-          text: Strings.PROVIDER_AUTH_BTN,
-          children: [TextSpan(
-            text: " " + Strings.GOOGLE_PROVIDER,
-            style: TextStyle(fontWeight: Dimens.FONT_WEIGHT_BOLD)
-          )]
+      label: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: RichText(
+          text: TextSpan(
+            style: DefaultTextStyle.of(context).style,
+            text: Strings.PROVIDER_AUTH_BTN,
+            children: [TextSpan(
+              text: " " + Strings.GOOGLE_PROVIDER,
+              style: TextStyle(fontWeight: Dimens.FONT_WEIGHT_BOLD)
+            )]
+          ),
         ),
       ),
       onPressed: onPressed,

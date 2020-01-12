@@ -96,7 +96,7 @@ class _ListItemMenuState extends State<ListItemMenu> {
                 height: sizePriorMenuIsShown?.height??50,
                 child: Center(
                   child: Wrap(
-                    spacing: 20,
+                    spacing: 40,
                     crossAxisAlignment: WrapCrossAlignment.center,
                     children: widget.actions
                   )
