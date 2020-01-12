@@ -24,7 +24,6 @@ class ResolutionsNotifier extends ChangeNotifier {
   Firestore _firestore;
 
   List<Resolution> _userResolutions = [];
-
   List<Resolution> get resolutions => _userResolutions;
   int get length => _userResolutions?.length??0;
 
@@ -41,9 +40,8 @@ class ResolutionsNotifier extends ChangeNotifier {
       handleData: (snap, sink) {
         List<Resolution> resolutions = [];
         for (DocumentSnapshot docSnap in snap.documents) {
-          Resolution r = Resolution.fromJson(docSnap.data);
+          Resolution r = Resolution.fromJson(id: docSnap.documentID, data: docSnap.data);
           resolutions.add(r);
-          print(r);
         }
         sink.add(resolutions);
       } 
@@ -61,15 +59,16 @@ class ResolutionsNotifier extends ChangeNotifier {
   }
 
 
-  Future<void> deleteResolution(String resolutionID) {
+  Future<void> deleteResolution(String resolutionID) async {
     String userUID = _authProvider.user.uid;
-    return _firestore.collection(userUID).document(resolutionID).delete();
+    print(resolutionID);
+    await _firestore.collection(userUID).document(resolutionID).delete();
   }
   
 
-  Future<void> updateResolution(Resolution resolution) {
+  Future<void> updateResolution(Resolution resolution) async {
     String userUID = _authProvider.user.uid;
-    return _firestore.collection(userUID).document().updateData(resolution.toJson());
+    await _firestore.collection(userUID).document().updateData(resolution.toJson());
   }
 
 }

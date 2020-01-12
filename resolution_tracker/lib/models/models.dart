@@ -1,5 +1,6 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 
 ///
 ///
@@ -13,9 +14,9 @@ class Resolution implements Comparable<Resolution> {
   DateTime lastDayVerified;
   List<bool> successHistory;
 
-  Resolution.fromJson(Map<String, Object> json) {
-    title = json["title"];
-    frequency = (json["frequency"] as List<dynamic>).cast<String>().map((f) => DaysEnum.fromValue(f)).toSet();
+  Resolution.fromJson({@required this.id, Map<String, Object> data}) {
+    title = data["title"];
+    frequency = (data["frequency"] as List<dynamic>).cast<String>().map((f) => DaysEnum.fromValue(f)).toSet();
 
     if (dateCreated == null)
        dateCreated = DateTime(0);

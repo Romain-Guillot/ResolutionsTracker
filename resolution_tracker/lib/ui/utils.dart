@@ -77,11 +77,13 @@ class _ListItemMenuState extends State<ListItemMenu> {
   bool menuIsShown = false;
   Size sizePriorMenuIsShown;
 
+
   @override
   Widget build(BuildContext context) {
     return Container(
       key: _key,
       color: widget.background??Colors.transparent,
+      width: double.infinity,
       child: Material(
         color: Colors.transparent,
         child: InkWell(
@@ -90,8 +92,8 @@ class _ListItemMenuState extends State<ListItemMenu> {
           child: 
             menuIsShown 
             ? SizedBox(
-                width: sizePriorMenuIsShown.width,
-                height: sizePriorMenuIsShown.height,
+                width: sizePriorMenuIsShown?.width??double.infinity,
+                height: sizePriorMenuIsShown?.height??50,
                 child: Center(
                   child: Wrap(
                     spacing: 20,

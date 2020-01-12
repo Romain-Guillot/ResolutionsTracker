@@ -21,7 +21,7 @@ void main() {
   );
 } 
 
-
+GlobalKey scaffoldKey = GlobalKey();
 
 ShapeBorder bottomSheetShape = RoundedRectangleBorder(borderRadius: BorderRadius.only(topLeft: Radius.circular(Dimens.SHAPE_LARGE_COMPONENT), topRight: Radius.circular(Dimens.SHAPE_LARGE_COMPONENT)));
 ShapeBorder largeShape = RoundedRectangleBorder(borderRadius: BorderRadius.circular(Dimens.SHAPE_LARGE_COMPONENT));

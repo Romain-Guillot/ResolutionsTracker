@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
+import 'package:resolution_tracker/main.dart';
 import 'package:resolution_tracker/models/auth_notifier.dart';
 import 'package:resolution_tracker/models/models.dart';
 import 'package:resolution_tracker/models/resolutions_notifier.dart';
@@ -22,6 +23,7 @@ class HomePage extends StatelessWidget {
         statusBarIconBrightness: Brightness.dark,
       ),
       child: Scaffold(
+        key: scaffoldKey,
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: Builder(
           builder: (context) => Padding(
@@ -45,6 +47,7 @@ class HomePage extends StatelessWidget {
               ScrollConfiguration(
                 behavior: BasicScrollWithoutGlow(), // to remove glow effect when srolling
                 child: ListView.builder(
+                  key: GlobalKey(),
                   itemCount: resolutionsProvider.length,
                   itemBuilder: (context, position) => 
                     ResolutionItem(
@@ -83,7 +86,7 @@ class ResolutionItem extends StatelessWidget {
         ),
         IconButton(
           icon: Icon(Icons.delete, color: Theme.of(context).colorScheme.error),
-          onPressed: () => onDelete(context),
+          onPressed: onDelete,
         )
       ],
       content: Container(
@@ -98,17 +101,22 @@ class ResolutionItem extends StatelessWidget {
     ResolutionEditionWidget.show(context, resolution: resolution);
   }
 
-  onDelete(context) {
+  onDelete() {
+    var context = scaffoldKey.currentContext;
     AlertDialogFactory.show(
-      context: context,
+      context: scaffoldKey.currentContext,
       title: Text(Strings.DELETE_RESOLUTION_TITLE),
       content: Text(Strings.DELETE_RESOLUTION_INFO),
       onYes: () async {
-        await Provider.of<ResolutionsNotifier>(context, listen: false).deleteResolution(resolution.id);
-        Navigator.pop(context);
+        await Provider.of<ResolutionsNotifier>(context, listen: false).deleteResolution(resolution.id)
+          .then((_) => print("Success"))
+          .catchError((e) => print(e))
+          .whenComplete(() => Navigator.pop(context));
       }
     );
   }
+
+  
 
 
 }

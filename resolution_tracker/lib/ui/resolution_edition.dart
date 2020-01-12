@@ -49,61 +49,59 @@ class _ResolutionEditionWidgetState extends State<ResolutionEditionWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Builder(
-      builder: (context) => Padding(
-        padding: EdgeInsets.all(20),
-        child: Stack(
-          children: [
-            Form(
-              key: _formKey,
-              child: ScrollConfiguration(
-                  behavior: BasicScrollWithoutGlow(),
-                  child: ListView(
-                  children: <Widget>[
-                    TextFormField(
-                      controller: titleController,
-                      autofocus: widget.resolution == null,
-                      textCapitalization: TextCapitalization.sentences,
-                      decoration: InputDecoration.collapsed(hintText: Strings.ADD_RESOLUTION_TITLE_LABEL), 
-                      style: TextStyle(fontSize: 27, fontWeight: Dimens.FONT_WEIGHT_BOLD),
-                      validator: (value) => value.isNotEmpty ? null : Strings.ADD_RESOLUTION_TITLE_EMPTY_ERROR,
-                    ),
-                    SizedBox(height: Dimens.NORMAL_PADDING,),
-                    Text(Strings.ADD_RESOLUTION_FREQUENCY_LABEL, style: Theme.of(context).textTheme.subtitle),
-                    SizedBox(height: Dimens.NORMAL_PADDING,),
-                    Center(
-                      child: FrequencyFormField(controller: frequencyController,)
-                    ),
-                    SizedBox(height: Dimens.NORMAL_PADDING,),
-                    Text(Strings.ADD_RESOLTUION_ICON_LABEL, style: Theme.of(context).textTheme.subtitle),
-                  ],
-                ),
+    return Padding(
+      padding: EdgeInsets.all(20),
+      child: Stack(
+        children: [
+          Form(
+            key: _formKey,
+            child: ScrollConfiguration(
+                behavior: BasicScrollWithoutGlow(),
+                child: ListView(
+                children: <Widget>[
+                  TextFormField(
+                    controller: titleController,
+                    autofocus: widget.resolution == null,
+                    textCapitalization: TextCapitalization.sentences,
+                    decoration: InputDecoration.collapsed(hintText: Strings.ADD_RESOLUTION_TITLE_LABEL), 
+                    style: TextStyle(fontSize: 27, fontWeight: Dimens.FONT_WEIGHT_BOLD),
+                    validator: (value) => value.isNotEmpty ? null : Strings.ADD_RESOLUTION_TITLE_EMPTY_ERROR,
+                  ),
+                  SizedBox(height: Dimens.NORMAL_PADDING,),
+                  Text(Strings.ADD_RESOLUTION_FREQUENCY_LABEL, style: Theme.of(context).textTheme.subtitle),
+                  SizedBox(height: Dimens.NORMAL_PADDING,),
+                  Center(
+                    child: FrequencyFormField(controller: frequencyController,)
+                  ),
+                  SizedBox(height: Dimens.NORMAL_PADDING,),
+                  Text(Strings.ADD_RESOLTUION_ICON_LABEL, style: Theme.of(context).textTheme.subtitle),
+                ],
               ),
             ),
-            Align(
-              alignment: Alignment.bottomRight,
-              child: FlatButton(
-                child: Text(isLoading ? "Loading ..." : Strings.ADD_RESOLUTION_SUBMIT, 
-                  style: TextStyle(fontWeight: Dimens.FONT_WEIGHT_BOLD, 
-                  color: Theme.of(context).colorScheme.primary),
-                ), 
-                onPressed: isLoading ? null : () => submit(context),
-              )
+          ),
+          Align(
+            alignment: Alignment.bottomRight,
+            child: FlatButton(
+              child: Text(isLoading ? "Loading ..." : Strings.ADD_RESOLUTION_SUBMIT, 
+                style: TextStyle(fontWeight: Dimens.FONT_WEIGHT_BOLD, 
+                color: Theme.of(context).colorScheme.primary),
+              ), 
+              onPressed: isLoading ? null : submit,
             )
-          ]
-        ),
+          )
+        ]
       ),
     );
   }
 
-  submit(context) {
+  submit() {
     if (!isLoading && _formKey.currentState.validate()) {
       setState(() => isLoading = true);
       Resolution resolution = Resolution.create(titleController.text, null, frequencyController.values);
       Provider.of<ResolutionsNotifier>(context, listen: false).addResolution(resolution)
         .then((_) {
-          // SnackbarFactory.showSuccessSnackbar(context: context, content: Text(Strings.ADD_RESOLUTION_SUCCESS(titleController.text)));
           Navigator.pop(context);
+          // SnackbarFactory.showSuccessSnackbar(context: scaffoldKey.currentContext, content: Text(Strings.ADD_RESOLUTION_SUCCESS(titleController.text)));
         })
         .catchError((e) {
           print("errore" + e.toString());
