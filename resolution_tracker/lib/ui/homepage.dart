@@ -42,13 +42,16 @@ class HomePage extends StatelessWidget {
         body: SafeArea( // safe area is here to manage status and navigation bar color
           child: Consumer<ResolutionsNotifier>(
             builder: (context, resolutionsProvider, child) =>
-              ListView.builder(
-                itemCount: resolutionsProvider.length,
-                itemBuilder: (context, position) => 
-                  ResolutionItem(
-                    resolution: resolutionsProvider.resolutions.elementAt(position),
-                    background: position % 2 == 0 ? Colors.transparent : Colors.grey[200],
-                  )
+              ScrollConfiguration(
+                behavior: BasicScrollWithoutGlow(), // to remove glow effect when srolling
+                child: ListView.builder(
+                  itemCount: resolutionsProvider.length,
+                  itemBuilder: (context, position) => 
+                    ResolutionItem(
+                      resolution: resolutionsProvider.resolutions.elementAt(position),
+                      background: position % 2 == 0 ? Colors.transparent : Colors.grey[200],
+                    )
+                ),
               ),
           )
         ),
