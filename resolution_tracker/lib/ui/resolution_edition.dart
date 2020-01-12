@@ -82,9 +82,10 @@ class _ResolutionEditionWidgetState extends State<ResolutionEditionWidget> {
           Align(
             alignment: Alignment.bottomRight,
             child: FlatButton(
-              child: Text(isLoading ? "Loading ..." : Strings.ADD_RESOLUTION_SUBMIT, 
-                style: TextStyle(fontWeight: Dimens.FONT_WEIGHT_BOLD, 
-                color: Theme.of(context).colorScheme.primary),
+              textColor: Theme.of(context).colorScheme.primary,
+              child: Text(
+                isLoading ? "Loading ..." : Strings.ADD_RESOLUTION_SUBMIT, 
+                style: TextStyle(fontWeight: Dimens.FONT_WEIGHT_BOLD),
               ), 
               onPressed: isLoading ? null : submit,
             )
