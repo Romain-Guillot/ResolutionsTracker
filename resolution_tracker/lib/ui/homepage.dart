@@ -100,7 +100,11 @@ class ResolutionItem extends StatelessWidget {
             if (true)
               ...[
                 SizedBox(height: Dimens.NORMAL_PADDING),
-                ResolutionChecker(),
+                GestureDetector( // to ignore parent click listeners (open menu for example)
+                  onLongPress: () {},
+                  onTap: () {},
+                  child: ResolutionChecker()
+                ),
               ]
             
           ],
